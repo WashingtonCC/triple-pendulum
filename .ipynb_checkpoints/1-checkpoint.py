@@ -49,46 +49,17 @@ p1 = Bob(math.pi / 4, 0.05, R1, axis)
 p2 = Bob(math.pi / 4, 0.05, R2, (p1.x, p1.y))
 p3 = Bob(math.pi / 5, 0.05, R3, (p2.x, p2.y))
 
-theta1ddt = 0
-theta2ddt = 0
-theta3ddt = 0
 
 while True:
-    clock.tick(25)
+    clock.tick(100)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
 
-    theta1ddt = -(
-        R2 * p2.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
-        + R2 * p2.m * math.cos(p1.theta - p2.theta) * theta2ddt
-        + R2 * p3.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
-        + R2 * p3.m * math.cos(p1.theta - p2.theta) * theta2ddt
-        + R3 * p3.m * math.sin(p1.theta - p3.theta) * p3.thetadt**2
-        + R3 * p3.m * math.cos(p1.theta - p3.theta) * theta3ddt
-        + g * p1.m * math.sin(p1.theta)
-        + g * p2.m * math.sin(p1.theta)
-        + g * p3.m * math.sin(p1.theta)
-    ) / (R1 * (p1.m + p2.m + p3.m))
+    theta1ddt = -g * math.sin(p1.theta) / R1
 
-    theta2ddt = (
-        R1 * p2.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
-        - R1 * p2.m * math.cos(p1.theta - p2.theta) * theta1ddt
-        + R1 * p3.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
-        - R1 * p3.m * math.cos(p1.theta - p2.theta) * theta1ddt
-        - R3 * p3.m * math.sin(p2.theta - p3.theta) * p3.thetadt**2
-        - R3 * p3.m * math.cos(p2.theta - p3.theta) * theta3ddt
-        - g * p2.m * math.sin(p2.theta)
-        - g * p3.m * math.sin(p2.theta)
-    ) / (R2 * (p2.m + p3.m))
-
-    theta3ddt = (
-        R1 * math.sin(p1.theta - p3.theta) * p1.thetadt**2
-        - R1 * math.cos(p1.theta - p3.theta) * theta1ddt
-        + R2 * math.sin(p2.theta - p3.theta) * p2.thetadt**2
-        - R2 * math.cos(p2.theta - p3.theta) * theta2ddt
-        - g * math.sin(p3.theta)
-    ) / R3
+    theta2ddt = -g * math.sin(p2.theta) / R2
+    theta3ddt = -g * math.sin(p3.theta) / R3
 
     p1.thetadt += theta1ddt * dt
     p2.thetadt += theta2ddt * dt

@@ -1,8 +1,8 @@
 theta1ddt:
--(R2*m2*math.sin(theta1 - theta2)*theta2dt**2 + R2*m2*math.cos(theta1 - theta2)*theta2ddt) + R2*m3*math.sin(theta1 - theta2)*theta2dt**2 + R2*m3*math.cos(theta1 - theta2)*theta2ddt) + R3*m3*math.sin(theta1 - theta3)*theta3dt**2 + R3*m3*math.cos(theta1 - theta3)*theta3ddt) + g*m_1*math.sin(theta1) + g*m2*math.sin(theta1) + g*m3*math.sin(theta1))/(R1*(m_1 + m2 + m3))
+-(R2*p2.m*math.sin(p1.theta - p2.theta)*p2.thetadt**2 + R2*p2.m*math.cos(p1.theta - p2.theta)*theta2ddt + R2*p3.m*math.sin(p1.theta - p2.theta)*p2.thetadt**2 + R2*p3.m*math.cos(p1.theta - p2.theta)*theta2ddt + R3*p3.m*math.sin(p1.theta - theta3)*theta3dt**2 + R3*p3.m*math.cos(p1.theta - theta3)*theta3ddt + g*m1*math.sin(p1.theta) + g*p2.m*math.sin(p1.theta) + g*p3.m*math.sin(p1.theta))/(R1*(m1 + p2.m + p3.m))
 
-theta2ddt:
-(R1*m2*math.sin(theta1 - theta2)*theta1dt**2 - R1*m2*math.cos(theta1 - theta2)*theta1ddt) + R1*m3*math.sin(theta1 - theta2)*theta1dt**2 - R1*m3*math.cos(theta1 - theta2)*theta1ddt) - R3*m3*math.sin(theta2 - theta3)*theta3dt**2 - R3*m3*math.cos(theta2 - theta3)*theta3ddt) - g*m2*math.sin(theta2) - g*m3*math.sin(theta2))/(R2*(m2 + m3))
+p2.thetaddt:
+(R1*p2.m*math.sin(p1.theta - p2.theta)*p1.thetadt**2 - R1*p2.m*math.cos(p1.theta - p2.theta)*theta1ddt + R1*p3.m*math.sin(p1.theta - p2.theta)*p1.thetadt**2 - R1*p3.m*math.cos(p1.theta - p2.theta)*theta1ddt - R3*p3.m*math.sin(p2.theta - theta3)*theta3dt**2 - R3*p3.m*math.cos(p2.theta - theta3)*theta3ddt - g*p2.m*math.sin(p2.theta) - g*p3.m*math.sin(p2.theta))/(R2*(p2.m + p3.m))
 
 theta3ddt:
-(R1*math.sin(theta1 - theta3)*theta1dt**2 - R1*math.cos(theta1 - theta3)*theta1ddt) + R2*math.sin(theta2 - theta3)*theta2dt**2 - R2*math.cos(theta2 - theta3)*theta2ddt) - g*math.sin(theta3))/R3
+(R1*math.sin(p1.theta - theta3)*p1.thetadt**2 - R1*math.cos(p1.theta - theta3)*theta1ddt + R2*math.sin(p2.theta - theta3)*p2.thetadt**2 - R2*math.cos(p2.theta - theta3)*p2.thetaddt - g*math.sin(theta3))/R3
