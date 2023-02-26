@@ -59,7 +59,38 @@ while True:
         if event.type == pygame.QUIT:
             exit()
 
-    theta1ddt = -(
+    # theta1ddt = -(
+    #     R2 * p2.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
+    #     + R2 * p2.m * math.cos(p1.theta - p2.theta) * theta2ddt
+    #     + R2 * p3.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
+    #     + R2 * p3.m * math.cos(p1.theta - p2.theta) * theta2ddt
+    #     + R3 * p3.m * math.sin(p1.theta - p3.theta) * p3.thetadt**2
+    #     + R3 * p3.m * math.cos(p1.theta - p3.theta) * theta3ddt
+    #     + g * p1.m * math.sin(p1.theta)
+    #     + g * p2.m * math.sin(p1.theta)
+    #     + g * p3.m * math.sin(p1.theta)
+    # ) / (R1 * (p1.m + p2.m + p3.m))
+
+    # theta2ddt = (
+    #     R1 * p2.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
+    #     - R1 * p2.m * math.cos(p1.theta - p2.theta) * theta1ddt
+    #     + R1 * p3.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
+    #     - R1 * p3.m * math.cos(p1.theta - p2.theta) * theta1ddt
+    #     - R3 * p3.m * math.sin(p2.theta - p3.theta) * p3.thetadt**2
+    #     - R3 * p3.m * math.cos(p2.theta - p3.theta) * theta3ddt
+    #     - g * p2.m * math.sin(p2.theta)
+    #     - g * p3.m * math.sin(p2.theta)
+    # ) / (R2 * (p2.m + p3.m))
+
+    # theta3ddt = (
+    #     R1 * math.sin(p1.theta - p3.theta) * p1.thetadt**2
+    #     - R1 * math.cos(p1.theta - p3.theta) * theta1ddt
+    #     + R2 * math.sin(p2.theta - p3.theta) * p2.thetadt**2
+    #     - R2 * math.cos(p2.theta - p3.theta) * theta2ddt
+    #     - g * math.sin(p3.theta)
+    # ) / R3
+
+    theta1ddt = (
         R2 * p2.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
         + R2 * p2.m * math.cos(p1.theta - p2.theta) * theta2ddt
         + R2 * p3.m * math.sin(p1.theta - p2.theta) * p2.thetadt**2
@@ -69,18 +100,22 @@ while True:
         + g * p1.m * math.sin(p1.theta)
         + g * p2.m * math.sin(p1.theta)
         + g * p3.m * math.sin(p1.theta)
-    ) / (R1 * (p1.m + p2.m + p3.m))
+    )
+
+    theta1ddt = -theta1ddt / (R1 * (p1.m + p2.m + p3.m))
 
     theta2ddt = (
         R1 * p2.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
-        - R1 * p2.m * math.cos(p1.theta - p2.theta) * theta1ddt
+        - R1 * p2.m * math.cos(p1.theta - p2.theta) * theta2ddt * p1.theta
         + R1 * p3.m * math.sin(p1.theta - p2.theta) * p1.thetadt**2
         - R1 * p3.m * math.cos(p1.theta - p2.theta) * theta1ddt
         - R3 * p3.m * math.sin(p2.theta - p3.theta) * p3.thetadt**2
         - R3 * p3.m * math.cos(p2.theta - p3.theta) * theta3ddt
         - g * p2.m * math.sin(p2.theta)
         - g * p3.m * math.sin(p2.theta)
-    ) / (R2 * (p2.m + p3.m))
+    )
+
+    theta2ddt = theta2ddt / (R2 * (p2.m + p3.m))
 
     theta3ddt = (
         R1 * math.sin(p1.theta - p3.theta) * p1.thetadt**2
@@ -88,7 +123,9 @@ while True:
         + R2 * math.sin(p2.theta - p3.theta) * p2.thetadt**2
         - R2 * math.cos(p2.theta - p3.theta) * theta2ddt
         - g * math.sin(p3.theta)
-    ) / R3
+    )
+
+    theta3ddt = theta3ddt / R3
 
     p1.thetadt += theta1ddt * dt
     p2.thetadt += theta2ddt * dt
