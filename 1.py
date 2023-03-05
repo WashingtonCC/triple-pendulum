@@ -140,7 +140,7 @@ while True:
 
     p2.axis = [p1.x, p1.y]
     p2.x = R2 * math.sin(p2.theta) * scale + p2.axis[0]
-    p2.y = R2 * math.cos(p3.theta) * scale + p2.axis[1]
+    p2.y = R2 * math.cos(p2.theta) * scale + p2.axis[1]
 
     p3.axis = [p2.x, p2.y]
     p3.x = R3 * math.sin(p3.theta) * scale + p3.axis[0]
